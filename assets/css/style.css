@@ -1,0 +1,11 @@
+#playerOneDiv {
+	background: slategray
+	;
+	display: inline-block;
+	height: 100px;
+	width: 300px;
+	clear: both;
+	border-width: 5px;
+	border: black;
+
+}

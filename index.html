@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RPSmulti</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+  	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+    <!-- <script type="text/javascript" src="assets/javascript/app.js"></script> -->
+</head>
+<body>
+<header>RPS Multiplayer!</header>
+<div id='nameDiv'>
+	<form>
+	<label for='name'>Name:</label>
+	<input type='text' id='nameInput' placeholder="Name">
+	<button type='button' id='nameSubmit'>Start</button>
+
+	</form>
+</div>
+
+<div id='playerOneDiv'>
+
+
+
+
+</div>
+<div id='playerTwoDiv'>
+</div>
+	
+<script type="text/javascript">
+
+var pData = new Firebase("https://dr503.firebaseio.com/");
+var players = pData.child('players');
+var playerNum = 1;
+
+
+function playerId(snapshot){
+
+}
+function renderBoard (){
+
+
+	var $rock = $("<button>");
+	$rock.attr('id',"rock");
+	$rock.text("rock")
+	
+	var $paper = $("<button>");
+	$paper.attr('id',"paper");
+	$paper.text("paper")
+	
+	var $scissor = $("<button>");
+	$scissor.attr('id',"scissor");
+	$scissor.text("scissor")
+	
+
+	if (localId === 1){
+		$("#playerOneDiv").append($rock)
+		$("#playerOneDiv").append($paper)
+		$("#playerOneDiv").append($scissor)
+	}else if (localId === 2){
+		$("#playerTwoDiv").append($rock)
+		$("#playerTwoDiv").append($paper)
+		$("#playerTwoDiv").append($scissor)
+	}
+} 
+
+$("#nameSubmit").on('click', function(){
+	var playerName = $('#nameInput').val().trim();
+	var playerStat = {
+
+		name: playerName,
+		wins: 0,
+		losses: 0,
+	};
+	$("#nameInput").val('');
+	players.child(""+playerNum+"").set(playerStat);
+	localId = playerNum;
+	console.log(playerNum + "ogpn");
+	console.log(localId);
+	playerNum++;
+
+
+	console.log(playerNum);
+	return false;
+});
+
+players.on("value", function(snapshot){
+	console.log(snapshot.val());
+	if (snapshot.val().length === 3){console.log("ready"); renderBoard();}
+});
+
+var connectedData = new Firebase("https://dr503.firebaseio.com/viewers");	
+
+
+</script>
+
+</body>
+</html>
+
